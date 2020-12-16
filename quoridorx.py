@@ -8,14 +8,12 @@ class QuoridorX(Quoridor):
     def __init__(self, joueurs, murs=None):
         super().__init__(joueurs, murs)
         self.coups = []
-
-
-    def partie(self):
-        "Controller l'IA du jeu"
-        pass
     
-    def coordonnées(self, x, y):
-        self.j1.goto(ceil(((x -(12.5))/25))*25, ceil((y - (12.5))/25)*25)
+    def déplacer(self):
+        def coordonnées(self, x, y):
+            self.j1.goto(ceil(((x -(12.5))/25))*25, ceil((y - (12.5))/25)*25)
+            return (x, y)
+    
 
     #turtle.onscreenclick(coordonnées)
     
@@ -53,16 +51,16 @@ class QuoridorX(Quoridor):
         self.j1 = turtle.Turtle()
         self.j2 = turtle.Turtle()
 
-        j1.color('red')
-        j1.penup()
-        j1.left(90)
+        self.j1.color('red')
+        self.j1.penup()
+        self.j1.left(90)
 
-        j2.color('green')
-        j2.penup()
-        j2.right(90)
+        self.j2.color('green')
+        self.j2.penup()
+        self.j2.right(90)
 
-        j1.goto(self.etat['joueurs'][0]['pos'][0] + (12.5), self.etat['joueurs'][0]['pos'][1] + (12.5))
-        j2.goto(self.etat['joueurs'][1]['pos'][0]  + (12.5), self.etat['joueurs'][1]['pos'][1] + (12.5))
+        self.j1.goto(self.etat['joueurs'][0]['pos'][0] + (12.5), self.etat['joueurs'][0]['pos'][1] + (12.5))
+        self.j2.goto(self.etat['joueurs'][1]['pos'][0]  + (12.5), self.etat['joueurs'][1]['pos'][1] + (12.5))
 
         crayon = turtle.Turtle()
         crayon.width(4)

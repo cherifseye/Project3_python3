@@ -53,6 +53,7 @@ if __name__ == "__main__":
             print(partie)
 
         if COMMANDE.automatique:
+          afficher_damier()
           succes = False
           while not succes:
             coup = partie.jouer_coup(1)
@@ -81,7 +82,7 @@ if __name__ == "__main__":
           while not succes:
               coup = input('Que voulez-vous faire?')
 
-              if coup == 'd' or coup == 'déplacement':
+              if coup in  ('d', 'déplacement'):
                   pos = input('Vers quelle position?').split(',')
                   pos = (int(pos[0]), int(pos[1]))
                   partie.déplacer_jeton(1, pos)
@@ -91,8 +92,7 @@ if __name__ == "__main__":
                   partie.etat = nouveau
                   afficher_damier()
 
-              elif coup == 'm' or coup == 'mur':
-
+              elif coup in ('m', 'mur'):
                 pos = input('À quelle position?').split(',')
                 pos = (int(pos[0]), int(pos[1]))
                 orientation = input('Dans quelle orientation?')
