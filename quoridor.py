@@ -286,38 +286,37 @@ class Quoridor:
             """
         Vérifie si deux murs se croisent
         """
+            position_prise = []
 
-        position_prise = []
+            for mur in self.etat['murs']['horizontaux']:
+                    position_prise.append(mur)
+                    position_prise.append((mur[0] - 1, mur[1]))
+                    position_prise.append((mur[0] + 1, mur[1]))
+            for mur in self.etat['murs']['verticaux']:
+                    position_prise.append((mur[0] - 1, mur[1] + 1))
 
-        for mur in self.etat['murs']['horizontaux']:
-            position_prise.append(mur)
-            position_prise.append((mur[0] - 1, mur[1]))
-            position_prise.append((mur[0] + 1, mur[1]))
-        for mur in self.etat['murs']['verticaux']:
-            position_prise.append((mur[0] - 1, mur[1] + 1))
+            for mur in self.etat['murs']['horizontaux']:
+                    position_prise.remove(mur)
+                    if mur in position_prise:
+                            return True
+                    position_prise.append(mur)
 
-        for mur in self.etat['murs']['horizontaux']:
-            position_prise.remove(mur)
-            if mur in position_prise:
-                return True
-            position_prise.append(mur)
+            position_prise = []
 
-        position_prise = []
+            for mur in self.etat['murs']['verticaux']:
+                    position_prise.append(mur)
+                    position_prise.append((mur[0], mur[1] - 1))
+                    position_prise.append((mur[0], mur[1] + 1))
+            for mur in self.etat['murs']['horizontaux']:
+                    position_prise.append((mur[0] + 1, mur[1] - 1))
 
-        for mur in self.etat['murs']['verticaux']:
-            position_prise.append(mur)
-            position_prise.append((mur[0], mur[1] - 1))
-            position_prise.append((mur[0], mur[1] + 1))
-        for mur in self.etat['murs']['horizontaux']:
-            position_prise.append((mur[0] + 1, mur[1] - 1))
+            for mur in self.etat['murs']['verticaux']:
+                    position_prise.remove(mur)
+                    if mur in position_prise:
+                            return True
+                    position_prise.append(mur)
 
-        for mur in self.etat['murs']['verticaux']:
-            position_prise.remove(mur)
-            if mur in position_prise:
-                return True
-            position_prise.append(mur)
-
-        return False
+            return False
 
 
     def placer_mur(self, joueur, position, orientation):
