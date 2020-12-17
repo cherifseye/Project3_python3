@@ -59,8 +59,8 @@ class QuoridorX(Quoridor):
         self.j2.penup()
         self.j2.right(90)
 
-        self.j1.goto(self.etat['joueurs'][0]['pos'][0] + (12.5), self.etat['joueurs'][0]['pos'][1] + (12.5))
-        self.j2.goto(self.etat['joueurs'][1]['pos'][0]  + (12.5), self.etat['joueurs'][1]['pos'][1] + (12.5))
+        self.j1.goto((self.etat['joueurs'][0]['pos'][0]-(1/2))*25, -(9-(self.etat['joueurs'][0]['pos'][1]+(1/2)))*25 )       
+        self.j2.goto((self.etat['joueurs'][1]['pos'][0]- (1/2))*25, -(9-(self.etat['joueurs'][1]['pos'][1]+(1/2)))*25)
 
         crayon = turtle.Turtle()
         crayon.width(4)
