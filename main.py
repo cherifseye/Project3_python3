@@ -55,7 +55,7 @@ if __name__ == "__main__":
         if COMMANDE.automatique:
           afficher_damier()
           succes = False
-          while not succes:
+          while succes != True:
             coup = partie.jouer_coup(1)
             orientation = coup[0].split(' ')
 

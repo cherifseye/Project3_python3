@@ -226,14 +226,16 @@ class Quoridor:
         if (len(shortest1) > len(shortest2)+2  or len(shortest2) < 3 or choix == 1)\
             and self.etat['joueurs'][joueur-1]['murs'] != 0:
             i = 1
-            while i < len(shortest1):
+            while i < len(shortest2):
                 try:
                     if shortest2[i][0] == self.etat['joueurs'][other[0]]['pos'][0]:
-                        self.placer_mur(joueur, shortest2[i+1], 'horizontal')
-                        return ('Placer mur horizontal', shortest2[i+1])
+                        self.placer_mur(joueur, (shortest2[i][0], shortest2[i][1]+1), 'horizontal')
+                        return ('Placer mur horizontal', (shortest2[i][0], shortest2[i][1]+1))
+                        break
                     elif shortest2[i][1] == self.etat['joueurs'][other[0]]['pos'][1]:
                         self.placer_mur(joueur, shortest2[i], 'vertical')
                         return ('Placer mur vertical', shortest2[i])
+                        break
                 except:
                     i += 1
         self.déplacer_jeton(joueur, shortest1[1])
@@ -287,6 +289,7 @@ class Quoridor:
         or nx.has_path(graphe, new['joueurs'][1]['pos'], 'B2') is False:
             raise QuoridorError('La position est invalide pour cette orientation.')
 
+        self.etat = new
         self.etat['joueurs'][joueur-1]['murs'] -= 1
         return (orientation, position)
 
