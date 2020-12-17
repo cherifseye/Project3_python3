@@ -246,7 +246,7 @@ class Quoridor:
             while i < len(shortest2):
                 try:
                     if shortest2[i][0] == self.etat['joueurs'][other[0]]['pos'][0]:
-                        self.placer_mur(joueur, (shortest2[i][0], shortest2[i][1]+1), 'horizontal')
+                        self.placer_mur(joueur, (shortest2[i][0], shortest2[i][1]+2), 'horizontal')
                         return ('Placer mur horizontal', (shortest2[i][0], shortest2[i][1]+1))
                         break
                     elif shortest2[i][1] == self.etat['joueurs'][other[0]]['pos'][1]:
@@ -350,16 +350,29 @@ class Quoridor:
         self.etat['murs'][orientation].append(position)
         new = self.etat
         self.etat['murs'][orientation].remove(position)
+
         if position[1] not in range(1, 9)\
         or position[0] not in range(1, 9)\
         or nx.has_path(graphe, new['joueurs'][0]['pos'], 'B1') is False\
         or nx.has_path(graphe, new['joueurs'][1]['pos'], 'B2') is False\
-        or self.croisement_murs(position):
-            raise QuoridorError('La position est invalide pour cette orientation.')
-
+        or orientation == 'horizontaux' and position in self.espaces_pris()[0]\
+        or orientation == 'verticaux' and position in self.espaces_pris()[1]:
+                raise QuoridorError('La position est invalide pour cette orientation.')
+        
         self.etat = new
         self.etat['joueurs'][joueur-1]['murs'] -= 1
         return (orientation, position) 
+
+    def espaces_pris(self):
+            espaces = []
+            espaces_horizontaux = []
+            for mur in self.etat['murs']['verticaux']:
+                espaces.append((mur[0], mur[1]+1))
+                espaces.append((mur[0], mur[1]-1))
+            for mur in self.etat['murs']['horizontaux']:
+                espaces_horizontaux.append((mur[0]+1, mur[1]))
+                espaces_horizontaux.append((mur[0]-1, mur[1]))
+            return (espaces_horizontaux, espaces)
 
 
 def construire_graphe(joueurs, murs_horizontaux, murs_verticaux):
