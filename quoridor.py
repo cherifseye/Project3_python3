@@ -269,15 +269,15 @@ class Quoridor:
             return self.etat['joueurs'][1]['nom']
         return False
 
-        def joueur_enferme(self):
+    def joueur_enferme(self):
             """
         Vérifie si un joueur est enfermé
         """
             graphe = construire_graphe([joueur['pos'] for joueur in self.etat['joueurs']],
-                                       self.etat['murs']['horizontaux'],
+                                        self.etat['murs']['horizontaux'],
                                        self.etat['murs']['verticaux'])
 
-            if not (nx.has_path(graphe, self.etat['joueurs'][0]['pos'], 'B1')
+            if not (nx.has_path(graphe, self.etat['joueurs'][0]['pos'], 'B1')\
                     and nx.has_path(graphe, self.etat['joueurs'][1]['pos'], 'B2')):
                 return True
             return False    
