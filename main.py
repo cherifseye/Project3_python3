@@ -42,40 +42,38 @@ if __name__ == "__main__":
         état = dico[1]
         état['joueurs'][0]['pos'] = (état['joueurs'][0]['pos'][0], état['joueurs'][0]['pos'][1])
         état['joueurs'][1]['pos'] = (état['joueurs'][1]['pos'][0], état['joueurs'][1]['pos'][1])
-        
 
         partie = QuoridorX(état['joueurs'], état['murs'])
 
         def afficher_damier():
-          if COMMANDE.graphique:
-            partie.afficher()
-          else:
-            print(partie)
+            if COMMANDE.graphique:
+              partie.afficher()
+            else:
+              print(partie)
 
         if COMMANDE.automatique:
-          afficher_damier()
-          succes = False
-          while succes != True:
-            coup = partie.jouer_coup(1)
-            orientation = coup[0].split(' ')
+            afficher_damier()
+            succes = False
+            while succes != True:
+                coup = partie.jouer_coup(1)
+                orientation = coup[0].split(' ')
 
-            if 'Placer' in orientation:
-              nouveau = api.jouer_coup(id_partie,'M'+'{}'.format(orientation[2][0].upper()), coup[1])
-              nouveau['joueurs'][0]['pos'] = (nouveau['joueurs'][0]['pos'][0], nouveau['joueurs'][0]['pos'][1])
-              nouveau['joueurs'][1]['pos'] = (nouveau['joueurs'][1]['pos'][0], nouveau['joueurs'][1]['pos'][1])
-              partie.etat = nouveau
-              afficher_damier()
-            else:
-              nouveau = api.jouer_coup(id_partie, 'D', coup[1])
-              nouveau['joueurs'][0]['pos'] = (nouveau['joueurs'][0]['pos'][0], nouveau['joueurs'][0]['pos'][1])
-              nouveau['joueurs'][1]['pos'] = (nouveau['joueurs'][1]['pos'][0], nouveau['joueurs'][1]['pos'][1])
-              partie.etat = nouveau
-              afficher_damier()
+                if 'Placer' in orientation:
+                    nouveau = api.jouer_coup(id_partie,'M'+'{}'.format(orientation[2][0].upper()), coup[1])
+                    nouveau['joueurs'][0]['pos'] = (nouveau['joueurs'][0]['pos'][0], nouveau['joueurs'][0]['pos'][1])
+                    nouveau['joueurs'][1]['pos'] = (nouveau['joueurs'][1]['pos'][0], nouveau['joueurs'][1]['pos'][1])
+                    partie.etat = nouveau
+                    afficher_damier()
+                else:
+                    nouveau = api.jouer_coup(id_partie, 'D', coup[1])
+                    nouveau['joueurs'][0]['pos'] = (nouveau['joueurs'][0]['pos'][0], nouveau['joueurs'][0]['pos'][1])
+                    nouveau['joueurs'][1]['pos'] = (nouveau['joueurs'][1]['pos'][0], nouveau['joueurs'][1]['pos'][1])
+                    partie.etat = nouveau
+                    afficher_damier()
 
-            if partie.partie_terminée():
-              win = True
-              print('Le gagnant est {}'.format(partie.partie_terminée()))
-            
+                if partie.partie_terminée():
+                    win = True
+                    print('Le gagnant est {}'.format(partie.partie_terminée()))
 
         else:
           succes = False
@@ -104,14 +102,11 @@ if __name__ == "__main__":
                 partie.etat = nouveau
                 afficher_damier()
               else:
-                print("le coup n'est pas valide!")
+                  print("le coup n'est pas valide!")
 
               if partie.partie_terminée():
-                succes = True
-                print(partie.partie_terminée())
-
-                
-
+                  succes = True
+                  print(partie.partie_terminée())
 
     """ARGS = analyser_commande()
   initialiser_partie(ARGS.IDUL)
