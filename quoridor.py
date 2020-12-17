@@ -101,6 +101,13 @@ class Quoridor:
         if murs is not None:
             if not isinstance(murs, dict):
                 raise QuoridorError("L'argument 'murs' n'est pas un dictionnaire lorsque présent.")
+            self.etat["murs"]["horizontaux"] = murs["horizontaux"]
+            self.etat["murs"]["verticaux"] = murs["verticaux"]
+
+            if self.croisement_murs() or self.joueur_enferme() or self.verifier_pos_murs():
+                self.etat["murs"]["horizontaux"] = []
+                self.etat["murs"]["verticaux"] = []
+                raise QuoridorError("Position des murs invalide")    
 
         murs_restants = self.etat['joueurs'][0]['murs'] + self.etat['joueurs'][1]['murs']
         murs_horizontaux = len(self.etat["murs"]["horizontaux"])
@@ -108,7 +115,17 @@ class Quoridor:
         if murs_restants + murs_horizontaux + murs_verticaux != 20:
             raise QuoridorError("Le total des murs placés et plaçables n'est pas égal à 20")
 
-
+    def verifier_pos_murs(self):
+        """
+        Vérifie que les murs sont placés correctement.
+        """
+        for mur in self.etat["murs"]["horizontaux"]:
+            if mur[0] > 8 or mur[0] < 2 or mur[1] > 9 or mur[1] < 2:
+                return True
+        for mur in self.etat["murs"]["verticaux"]:
+            if mur[0] > 9 or mur[0] < 2 or mur[1] > 8 or mur[1] < 1:
+                return True
+        return False
     def __str__(self):
         """Représentation en art ascii de l'état actuel de la partie.
         Cette représentation est la même que celle du projet précédent.
@@ -251,6 +268,57 @@ class Quoridor:
         if self.etat['joueurs'][1]['pos'][1] == 1:
             return self.etat['joueurs'][1]['nom']
         return False
+
+        def joueur_enferme(self):
+            """
+        Vérifie si un joueur est enfermé
+        """
+            graphe = construire_graphe([joueur['pos'] for joueur in self.etat['joueurs']],
+                                       self.etat['murs']['horizontaux'],
+                                       self.etat['murs']['verticaux'])
+
+            if not (nx.has_path(graphe, self.etat['joueurs'][0]['pos'], 'B1')
+                    and nx.has_path(graphe, self.etat['joueurs'][1]['pos'], 'B2')):
+                return True
+            return False    
+            
+    def croisement_murs(self):
+            """
+        Vérifie si deux murs se croisent
+        """
+
+        position_prise = []
+
+        for mur in self.etat['murs']['horizontaux']:
+            position_prise.append(mur)
+            position_prise.append((mur[0] - 1, mur[1]))
+            position_prise.append((mur[0] + 1, mur[1]))
+        for mur in self.etat['murs']['verticaux']:
+            position_prise.append((mur[0] - 1, mur[1] + 1))
+
+        for mur in self.etat['murs']['horizontaux']:
+            position_prise.remove(mur)
+            if mur in position_prise:
+                return True
+            position_prise.append(mur)
+
+        position_prise = []
+
+        for mur in self.etat['murs']['verticaux']:
+            position_prise.append(mur)
+            position_prise.append((mur[0], mur[1] - 1))
+            position_prise.append((mur[0], mur[1] + 1))
+        for mur in self.etat['murs']['horizontaux']:
+            position_prise.append((mur[0] + 1, mur[1] - 1))
+
+        for mur in self.etat['murs']['verticaux']:
+            position_prise.remove(mur)
+            if mur in position_prise:
+                return True
+            position_prise.append(mur)
+
+        return False
+
 
     def placer_mur(self, joueur, position, orientation):
         """Placer un mur.
