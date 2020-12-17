@@ -81,30 +81,30 @@ if __name__ == "__main__":
         else:
           succes = False
           while succes != True:
-              coup = input('Que voulez-vous faire?')
+              try:
+                  coup = input('Que voulez-vous faire?')
+                  if coup in  ('d', 'déplacement'):
+                      pos = input('Vers quelle position?').split(',')
+                      pos = (int(pos[0]), int(pos[1]))
+                      partie.déplacer_jeton(1, pos)
+                      nouveau = api.jouer_coup(id_partie, 'D', pos)
+                      nouveau['joueurs'][0]['pos'] = (nouveau['joueurs'][0]['pos'][0], nouveau['joueurs'][0]['pos'][1])
+                      nouveau['joueurs'][1]['pos'] = (nouveau['joueurs'][1]['pos'][0], nouveau['joueurs'][1]['pos'][1])
+                      partie.etat = nouveau
+                      afficher_damier()
 
-              if coup in  ('d', 'déplacement'):
-                  pos = input('Vers quelle position?').split(',')
-                  pos = (int(pos[0]), int(pos[1]))
-                  partie.déplacer_jeton(1, pos)
-                  nouveau = api.jouer_coup(id_partie, 'D', pos)
-                  nouveau['joueurs'][0]['pos'] = (nouveau['joueurs'][0]['pos'][0], nouveau['joueurs'][0]['pos'][1])
-                  nouveau['joueurs'][1]['pos'] = (nouveau['joueurs'][1]['pos'][0], nouveau['joueurs'][1]['pos'][1])
-                  partie.etat = nouveau
-                  afficher_damier()
-
-              elif coup in ('m', 'mur'):
-                pos = input('À quelle position?').split(',')
-                pos = (int(pos[0]), int(pos[1]))
-                orientation = input('Dans quelle orientation?')
-                partie.placer_mur(1, pos, orientation)
-                afficher_damier()
-                nouveau = api.jouer_coup(id_partie, 'M'+'{}'.format(orientation[0].upper()), pos)
-                nouveau['joueurs'][0]['pos'] = (nouveau['joueurs'][0]['pos'][0], nouveau['joueurs'][0]['pos'][1])
-                nouveau['joueurs'][1]['pos'] = (nouveau['joueurs'][1]['pos'][0], nouveau['joueurs'][1]['pos'][1])
-                partie.etat = nouveau
-                afficher_damier()
-              else:
+                  elif coup in ('m', 'mur'):
+                      pos = input('À quelle position?').split(',')
+                      pos = (int(pos[0]), int(pos[1]))
+                      orientation = input('Dans quelle orientation?')
+                      partie.placer_mur(1, pos, orientation)
+                      afficher_damier()
+                      nouveau = api.jouer_coup(id_partie, 'M'+'{}'.format(orientation[0].upper()), pos)
+                      nouveau['joueurs'][0]['pos'] = (nouveau['joueurs'][0]['pos'][0], nouveau['joueurs'][0]['pos'][1])
+                      nouveau['joueurs'][1]['pos'] = (nouveau['joueurs'][1]['pos'][0], nouveau['joueurs'][1]['pos'][1])
+                      partie.etat = nouveau
+                      afficher_damier()
+              except:
                   print("le coup n'est pas valide!")
 
               if partie.partie_terminée():

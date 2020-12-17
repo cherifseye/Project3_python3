@@ -291,7 +291,7 @@ class Quoridor:
 
         self.etat = new
         self.etat['joueurs'][joueur-1]['murs'] -= 1
-        return (orientation, position)
+        return (orientation, position) 
 
 
 def construire_graphe(joueurs, murs_horizontaux, murs_verticaux):
