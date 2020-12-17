@@ -353,7 +353,8 @@ class Quoridor:
         if position[1] not in range(1, 9)\
         or position[0] not in range(1, 9)\
         or nx.has_path(graphe, new['joueurs'][0]['pos'], 'B1') is False\
-        or nx.has_path(graphe, new['joueurs'][1]['pos'], 'B2') is False:
+        or nx.has_path(graphe, new['joueurs'][1]['pos'], 'B2') is False\
+        or self.croisement_murs(position):
             raise QuoridorError('La position est invalide pour cette orientation.')
 
         self.etat = new
