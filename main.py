@@ -87,7 +87,6 @@ if __name__ == "__main__":
                 while succes != True:
                     try:
                         coup = partie.window.textinput('Coup', 'Que voulez-vous faire?')
-                        partie.window.update()
                         if coup in  ('d', 'déplacement'):
                             pos = partie.window.textinput('Position','Vers quelle position?')
                             pos = (int(pos[0]), int(pos[2]))
