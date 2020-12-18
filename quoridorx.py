@@ -13,14 +13,13 @@ class QuoridorX(Quoridor):
         def coordonnées(self, x, y):
             self.j1.goto(ceil(((x -(12.5))/25))*25, ceil((y - (12.5))/25)*25)
             return (x, y)
-    
 
     #turtle.onscreenclick(coordonnées)
     
     def afficher(self):
-        window = turtle.Screen()
-        window.title("Le plateau")
-        window.setup(width=400, height=400)
+        self.window = turtle.Screen()
+        self.window.title("Le plateau")
+        self.window.setup(width=400, height=400)
     
     
         plateau = turtle.Turtle()
@@ -77,6 +76,7 @@ class QuoridorX(Quoridor):
             crayon.right(90)
             crayon.pendown()
             crayon.forward(50)
+
         turtle.done()
 """
 d = 50
