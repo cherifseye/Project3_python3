@@ -52,3 +52,4 @@ def jouer_coup(id_partie, type_coup, pos):
         return rep['état']
         # La requête n'a pas fonctionner, la fonction affiche le code d'erreur
     return f"Le GET sur {URL_BASE+'jouer'} a produit le code d'erreur {rep.status_code}."
+    

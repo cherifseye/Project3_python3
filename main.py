@@ -64,8 +64,10 @@ if __name__ == "__main__":
                 if 'Placer' in orientation:
                     nouveau = api.jouer_coup(id_partie,'M'+'{}'.format(orientation[2][0].upper()), coup[1])
                     print(nouveau)
-                    nouveau['joueurs'][0]['pos'] = (nouveau['joueurs'][0]['pos'][0], nouveau['joueurs'][0]['pos'][1])
-                    nouveau['joueurs'][1]['pos'] = (nouveau['joueurs'][1]['pos'][0], nouveau['joueurs'][1]['pos'][1])
+                    nouveau['joueurs'][0]['pos'] = (
+                        nouveau['joueurs'][0]['pos'][0], nouveau['joueurs'][0]['pos'][1])
+                    nouveau['joueurs'][1]['pos'] = (
+                        nouveau['joueurs'][1]['pos'][0], nouveau['joueurs'][1]['pos'][1])
                     partie.etat = nouveau
                     afficher_damier()
                 else:
